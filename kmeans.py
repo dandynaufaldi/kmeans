@@ -22,6 +22,8 @@ class KMeans:
             Seed number to use in random generator (the default is None)
         centroid : list
             List of centroid values
+        SSE : float
+            Sum squared error score
     """
 
     def __init__(
@@ -52,6 +54,7 @@ class KMeans:
         self.init_pp = init_pp
         self.seed = seed
         self.centroid = None
+        self.SSE = None
 
     def fit(self, data: numpy.ndarray):
         """Fit K-Means algorithm to given data
@@ -72,6 +75,16 @@ class KMeans:
 
             if diff <= self.tolerance:
                 break
+
+        def calc_sse(centroids: numpy.ndarray, labels: numpy.ndarray, data: numpy.ndarray):
+            distances = 0
+            for i, c in enumerate(centroids):
+                idx = numpy.where(labels == i)
+                dist = numpy.sum((data[idx] - c)**2)
+                distances += dist
+            return distances
+
+        self.SSE = calc_sse(self.centroid, cluster, data)
 
     def predict(self, data: numpy.ndarray):
         """Predict new data's cluster using minimum distance to centroid
