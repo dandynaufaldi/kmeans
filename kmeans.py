@@ -33,7 +33,9 @@ class KMeans:
             max_iter: int = 300,
             tolerance: float = 1e-4,
             seed: int = None):
-        """Attributes
+        """Instantiate K-Means object
+
+        Parameters
         ----------
         n_cluster : int
             Num of cluster applied to data
@@ -96,9 +98,9 @@ class KMeans:
 
         """
         distance = self._calc_distance(data)
-        print(distance.shape)
+        # print(distance.shape)
         cluster = self._assign_cluster(distance)
-        print(cluster.shape)
+        # print(cluster.shape)
         return cluster
 
     def _init_centroid(self, data: numpy.ndarray):
@@ -131,7 +133,7 @@ class KMeans:
             numpy.random.seed(self.seed)
             idx = numpy.random.choice(range(len(data)), size=(self.n_cluster))
             centroid = data[idx]
-        print(centroid)
+        # print(centroid)
         return centroid
 
     def _calc_distance(self, data: numpy.ndarray):
